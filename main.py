@@ -67,6 +67,8 @@ def setup_new_problem():
     st.session_state.checked = False
     st.session_state.user_input = ""
 
+    st.session_state.current_input = ""
+
 
 # --- Step-by-Step Renderers ---
 def show_add_sub_steps(f1, f2, op):
