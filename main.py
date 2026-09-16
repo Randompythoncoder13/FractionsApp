@@ -19,7 +19,12 @@ def get_op_latex(op):
 
 def generate_fraction():
     """Generates a random non-zero fraction."""
-    num = random.randint(1, 7) * random.choice([-1, 1])
+    num = random.randint(1, 7)
+
+    # Multiply by -1 or 1 only if negatives are allowed
+    if st.session_state.get("allow_negatives", True):
+        num *= random.choice([-1, 1])
+
     den = random.randint(2, 7)
     return Fraction(num, den)
 
@@ -143,6 +148,9 @@ st.markdown("""
 
 # --- Sidebar Customization ---
 st.sidebar.header("⚙️ Customization")
+
+st.sidebar.checkbox("Include Negative Fractions", value=True, key="allow_negatives", on_change=setup_new_problem)
+
 st.sidebar.multiselect("Operations to Include", ["+", "-", "*", "/"], default=["+", "-", "*", "/"], key="selected_ops",
                        on_change=setup_new_problem)
 st.sidebar.radio("Problem Type", ["Single Operation", "Multi-step (3 fractions)"], key="problem_mode",
